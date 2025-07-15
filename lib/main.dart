@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   items: currency.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text("${getFlagEmojiForCurrency(value)} $value"),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   items: currency.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text("${getFlagEmojiForCurrency(value)} $value"),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
