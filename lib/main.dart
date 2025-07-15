@@ -35,11 +35,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 Future <ExchangeRate> getExchangeRate() async{
   print("getExchangeRate");
-  var from="USD";
-  var to="THB";
+  var from="THB";
+  var to="JPY";
   
   var apiKey = "077cf9a4cc9f0bb8d89a2bde";
-  var url ="https://v6.exchangerate-api.com/v6/$apiKey/latest/$from";
+  var url ="https://v6.exchangerate-api.com/v6/$apiKey/pair/$from/$to";
   var response =await http.get(Uri.parse(url));
   
     _dataFromAPI = exchangeRateFromJson(response.body);
@@ -59,15 +59,15 @@ Future <ExchangeRate> getExchangeRate() async{
               if(snapshot.connectionState == ConnectionState.done){
                 var result = snapshot.data;
                 
-                var conversionRates = result.conversionRates;
-                var to = "USD";
+                var conversionRates = result.conversionRate;
+                var to = result.targetCode;
                 return ListView(
                   children: [
                     ListTile(
                       title: Text("Base Currency: ${result.baseCode}"),
                     ),
                      ListTile(
-                      title: Text("Exchange Rate to $to: ${conversionRates[to]}"),
+                      title: Text("Exchange Rate to $to: ${conversionRates.toString()}"),
                     ),
                   ],
                 );

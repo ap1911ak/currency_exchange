@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final exchangeRate = exchangeRateFromJson(jsonString);
+
 import 'dart:convert';
 
 ExchangeRate exchangeRateFromJson(String str) => ExchangeRate.fromJson(json.decode(str));
@@ -13,7 +17,8 @@ class ExchangeRate {
     int? timeNextUpdateUnix;
     String? timeNextUpdateUtc;
     String? baseCode;
-    Map<String, double>? conversionRates;
+    String? targetCode;
+    double? conversionRate;
 
     ExchangeRate({
         this.result,
@@ -24,7 +29,8 @@ class ExchangeRate {
         this.timeNextUpdateUnix,
         this.timeNextUpdateUtc,
         this.baseCode,
-        this.conversionRates,
+        this.targetCode,
+        this.conversionRate,
     });
 
     factory ExchangeRate.fromJson(Map<String, dynamic> json) => ExchangeRate(
@@ -36,10 +42,9 @@ class ExchangeRate {
         timeNextUpdateUnix: json["time_next_update_unix"],
         timeNextUpdateUtc: json["time_next_update_utc"],
         baseCode: json["base_code"],
-        conversionRates: Map.from(json["conversion_rates"]!).map((k, v) => MapEntry<String, double>(k, v?.toDouble())),
+        targetCode: json["target_code"],
+        conversionRate: json["conversion_rate"]?.toDouble(),
     );
-
-  get base => null;
 
     Map<String, dynamic> toJson() => {
         "result": result,
@@ -50,6 +55,7 @@ class ExchangeRate {
         "time_next_update_unix": timeNextUpdateUnix,
         "time_next_update_utc": timeNextUpdateUtc,
         "base_code": baseCode,
-        "conversion_rates": Map.from(conversionRates!).map((k, v) => MapEntry<String, dynamic>(k, v)),
+        "target_code": targetCode,
+        "conversion_rate": conversionRate,
     };
 }
