@@ -36,6 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
   ExchangeRate? _dataFromAPI;
   var from = "THB";
   var to = "JPY";
+  var value = 1.0;
+    double? convertedValue;
+    final TextEditingController valueController = TextEditingController(text: "1");
 
   Future<ExchangeRate> getExchangeRate(String from, String to) async {
     print("getExchangeRate");
@@ -96,8 +99,34 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 ),
+                    SizedBox(height: 20),
+                TextField(
+                  controller: valueController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: "Amount",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
                 SizedBox(height: 20),
                 Text("Exchange Rate from $from to $to: ${result.conversionRate}"),
+                 ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      value = double.tryParse(valueController.text) ?? 1.0;
+                      convertedValue = value * result.conversionRate;
+                    });
+                  },
+                  child: Text("Convert"),
+                ),
+                SizedBox(height: 20),
+                Text("Exchange Rate from $from to $to: ${result.conversionRate}"),
+                if (convertedValue != null)
+                  Text(
+                    "$value $from = ${convertedValue!.toStringAsFixed(2)} $to",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+
               ],
             );
           }
