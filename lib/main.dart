@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'ExchangeRate.dart';
 import 'currencySymbol.dart';
-import 'package:flutter/src/material/dropdown.dart';
 
 Future<void> main() async {
   runApp(MyApp());
@@ -37,8 +36,11 @@ class _MyHomePageState extends State<MyHomePage> {
   var from = "THB";
   var to = "JPY";
   var value = 1.0;
-    double? convertedValue;
-    final TextEditingController valueController = TextEditingController(text: "1");
+  double? convertedValue;
+
+  final TextEditingController valueController = TextEditingController(
+    text: "1",
+  );
 
   Future<ExchangeRate> getExchangeRate(String from, String to) async {
     print("getExchangeRate");
@@ -99,18 +101,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                 ),
-                    SizedBox(height: 20),
+                SizedBox(height: 20),
                 TextField(
                   controller: valueController,
-                  keyboardType: TextInputType.number,
+                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: "Amount",
                     border: OutlineInputBorder(),
                   ),
                 ),
                 SizedBox(height: 20),
-                Text("Exchange Rate from $from to $to: ${result.conversionRate}"),
-                 ElevatedButton(
+                ElevatedButton(
                   onPressed: () {
                     setState(() {
                       value = double.tryParse(valueController.text) ?? 1.0;
@@ -120,13 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text("Convert"),
                 ),
                 SizedBox(height: 20),
-                Text("Exchange Rate from $from to $to: ${result.conversionRate}"),
                 if (convertedValue != null)
                   Text(
                     "$value $from = ${convertedValue!.toStringAsFixed(2)} $to",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-
               ],
             );
           }
